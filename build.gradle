@@ -1,0 +1,37 @@
+
+group 'javasample'
+version '1.0-SNAPSHOT'
+
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.org.hidetake:gradle-swagger-generator-plugin:2.4.2"
+    }
+}
+
+
+
+apply plugin: "org.hidetake.swagger.generator"
+repositories {
+    jcenter()
+}
+
+dependencies {
+    // Add dependency for Swagger Codegen CLI
+    swaggerCodegen 'io.swagger:swagger-codegen-cli:2.2.1'
+}
+
+generateSwaggerCode {
+    language = 'spring'
+    inputFile = file('default.yaml')
+    configFile = file('config.json')
+    components = ['models', 'apis']
+}
+validateSwagger {
+    inputFile = file('default.yaml')
+}
